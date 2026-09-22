@@ -5,7 +5,7 @@ MapleStory v83 private-server hacks, tools and reverse-engineering experiments w
 This repository contains the tools I built while researching MapleStory private-server clients, mainly **YunaMS** and **KuroMS**.
 
 > **Important:** these tools are build-specific.  
-> Addresses, offsets, structures and code signatures that work on one client build may not work on another.
+> Addresses, offsets, structures and code signatures that work on one client build may not work on another. But the concept works exactly the same all the time.
 >
 > You have to run powershell as admin. Or you can make them all an .exe
 Example: py -m PyInstaller --clean --noconfirm --onefile --windowed --uac-admin --name damage multiskill.py
