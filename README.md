@@ -6,6 +6,9 @@ This repository contains the tools I built while researching MapleStory private-
 
 > **Important:** these tools are build-specific.  
 > Addresses, offsets, structures and code signatures that work on one client build may not work on another.
+>
+> You have to run powershell as admin. Or you can make them all an .exe
+Example: py -m PyInstaller --clean --noconfirm --onefile --windowed --uac-admin --name damage multiskill.py
 
 ---
 
