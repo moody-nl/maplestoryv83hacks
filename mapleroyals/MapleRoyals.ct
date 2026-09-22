@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="46">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Muis X"</Description>
+      <LastState Value="1019" RealAddress="05957948"/>
+      <ShowAsSigned>1</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"MapleRoyals.exe"+007EC20C</Address>
+      <Offsets>
+        <Offset>9C</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Wall Rechts"</Description>
+      <LastState Value="407" RealAddress="05AA18A8"/>
+      <ShowAsSigned>1</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"MapleRoyals.exe"+007EBFA0</Address>
+      <Offsets>
+        <Offset>2C</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Wall Links"</Description>
+      <LastState Value="-317" RealAddress="05AA18A0"/>
+      <ShowAsSigned>1</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"MapleRoyals.exe"+007EBFA0</Address>
+      <Offsets>
+        <Offset>24</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Bottem Map"</Description>
+      <LastState Value="220" RealAddress="05AA18AC"/>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"MapleRoyals.exe"+007EBFA0</Address>
+      <Offsets>
+        <Offset>30</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"Top Map"</Description>
+      <LastState Value="-2143" RealAddress="05AA18A4"/>
+      <ShowAsSigned>1</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"MapleRoyals.exe"+007EBFA0</Address>
+      <Offsets>
+        <Offset>28</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"Char X"</Description>
+      <ShowAsSigned>1</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"MapleRoyals.exe"+007ED788</Address>
+      <Offsets>
+        <Offset>5D4</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"Char Y"</Description>
+      <ShowAsSigned>1</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"MapleRoyals.exe"+007ED788</Address>
+      <Offsets>
+        <Offset>5D8</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"MAP ID"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"MapleRoyals.exe"+007ED788</Address>
+      <Offsets>
+        <Offset>668</Offset>
+      </Offsets>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <LuaScript>-- JOUW WERKEND SCRIPT + F7 RECHTS FIX
+local al = getAddressList()
+local mrLeft = al.getMemoryRecordByDescription('Wall Links')
+local mrRight = al.getMemoryRecordByDescription('Wall Rechts')
+
+if not mrLeft or not mrRight then
+  print('Records niet gevonden!')
+  return
+end
+
+-- GLOBALE ORIGINELE WAARDEN (SCRIPT START)
+local ORIG_RECHTS = tonumber(mrRight.Value)  -- 1810 DIRECT!
+local ORIG_LINKS = tonumber(mrLeft.Value)    -- -1000 DIRECT!
+print('🚀 ORIGINEEL opgeslagen: Rechts=' .. ORIG_RECHTS .. ' Links=' .. ORIG_LINKS)
+
+local function matchLeftMode()
+  local leftVal = tonumber(mrLeft.Value)
+  local rightVal = leftVal + 60          -- F5: LINKS = +60px vacuum
+  mrRight.Value = tostring(rightVal)
+  mrRight.Active = true
+  mrRight.Freeze = true
+  print('F5 LINKS: Rechts=' .. rightVal)
+end
+
+-- F5 = LINKS MODE
+createHotkey(function()
+  matchLeftMode()
+end, VK_F5)
+
+-- F6 = ALTIJD 1810 TERUG
+createHotkey(function()
+  mrRight.Value = tostring(ORIG_RECHTS)
+  mrRight.Freeze = false
+  mrRight.Active = false
+  print('✅ F6: RECHTS=' .. ORIG_RECHTS .. ' (map origineel)')
+end, VK_F6)
+
+local function matchRightMode()
+  local rightVal = tonumber(mrRight.Value)
+  local leftVal = rightVal - 60          -- F7: RECHTS = -60px vacuum (FIX!)
+  mrLeft.Value = tostring(leftVal)
+  mrLeft.Active = true
+  mrLeft.Freeze = true
+  print('F7 RECHTS: Links=' .. leftVal)
+end
+
+-- F7 = RECHTS MODE
+createHotkey(function()
+  matchRightMode()
+end, VK_F7)
+
+-- F8 = ALTIJD -1000 TERUG
+createHotkey(function()
+  mrLeft.Value = tostring(ORIG_LINKS)
+  mrLeft.Freeze = false
+  mrLeft.Active = false
+  print('✅ F8: LINKS=' .. ORIG_LINKS .. ' (map origineel)')
+end, VK_F8)
+
+print('✅ F7 RECHTS FIX | F5→F6=1810 | F7→F8=-1000')
+
+</LuaScript>
+</CheatTable>
