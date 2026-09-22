@@ -1,4 +1,4 @@
-# maplestory v83 hacks
+# Maplestory v83 hacks
 
 MapleStory v83 private-server hacks, tools and reverse-engineering experiments written in Python.
 
